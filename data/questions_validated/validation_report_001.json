@@ -1,0 +1,16 @@
+{
+  "id": "validation_report_001",
+  "batch_id": "validated_batch_001",
+  "status": "complete",
+  "summary": {
+    "total_questions": 3,
+    "schema_errors": 0,
+    "critical_flags_open": 0,
+    "warnings_open": 0
+  },
+  "flags": [],
+  "generated_at": "2026-03-24T00:00:00Z",
+  "notes": [
+    "Report included as repository placeholder for validated pipeline wiring."
+  ]
+}
