@@ -1,0 +1,95 @@
+{
+  "batch_id": "question_bank_validated_batch_01",
+  "title": "Question Bank Validated Batch 01",
+  "status": "validated",
+  "questions": [
+    {
+      "question_id": "qv001",
+      "rule_ids": ["repo.workflow.validated_source"],
+      "domain": "repository_operations",
+      "subdomain": "validated_content_pipeline",
+      "difficulty": "easy",
+      "format": "single_best_answer",
+      "stem": "Which folder is the runtime source for approved question content?",
+      "options": [
+        { "key": "A", "text": "data/questions_raw" },
+        { "key": "B", "text": "data/questions_validated" },
+        { "key": "C", "text": "docs" },
+        { "key": "D", "text": "app/src" }
+      ],
+      "correct_answer": "B",
+      "correct_explanation": "Correct: validated items in data/questions_validated are the approved runtime source.",
+      "wrong_explanations": {
+        "A": "questions_raw is draft staging and not runtime-approved.",
+        "C": "docs describe process but are not the question bank.",
+        "D": "app/src contains code, not approved question artifacts."
+      },
+      "trap_type": "source_confusion",
+      "source_confidence": "high",
+      "review_status": "approved",
+      "status_history": [
+        { "status": "draft", "at": "2026-03-20T00:00:00Z" },
+        { "status": "validated", "at": "2026-03-24T00:00:00Z" }
+      ]
+    },
+    {
+      "question_id": "qv002",
+      "rule_ids": ["schema.change.minimal"],
+      "domain": "repository_operations",
+      "subdomain": "schema_governance",
+      "difficulty": "medium",
+      "format": "single_best_answer",
+      "stem": "What is the safest default when changing shared schemas?",
+      "options": [
+        { "key": "A", "text": "Change often with no notes" },
+        { "key": "B", "text": "Keep changes minimal and document impact" },
+        { "key": "C", "text": "Skip checks to ship faster" },
+        { "key": "D", "text": "Only update UI assumptions" }
+      ],
+      "correct_answer": "B",
+      "correct_explanation": "Correct: minimal, documented schema edits reduce downstream breakage.",
+      "wrong_explanations": {
+        "A": "Frequent undocumented drift breaks validation consumers.",
+        "C": "Skipping checks raises pipeline and runtime risk.",
+        "D": "UI-only updates cause contract mismatch with source data."
+      },
+      "trap_type": "process_shortcut",
+      "source_confidence": "high",
+      "review_status": "approved",
+      "status_history": [
+        { "status": "draft", "at": "2026-03-20T00:00:00Z" },
+        { "status": "validated", "at": "2026-03-24T00:00:00Z" }
+      ]
+    },
+    {
+      "question_id": "qv003",
+      "rule_ids": ["session.feedback.before_next"],
+      "domain": "app_runtime",
+      "subdomain": "practice_flow",
+      "difficulty": "easy",
+      "format": "single_best_answer",
+      "stem": "After submitting an answer in batch practice, what should the app do next?",
+      "options": [
+        { "key": "A", "text": "Jump straight to final score" },
+        { "key": "B", "text": "Hide all explanations" },
+        { "key": "C", "text": "Show explanation feedback, then allow Next" },
+        { "key": "D", "text": "Reset the session state" }
+      ],
+      "correct_answer": "C",
+      "correct_explanation": "Correct: feedback should appear before advancing so learners understand outcomes.",
+      "wrong_explanations": {
+        "A": "Skipping feedback removes learning value.",
+        "B": "No explanation means no correction loop.",
+        "D": "Resetting state would lose progress and session context."
+      },
+      "trap_type": "premature_progression",
+      "source_confidence": "medium",
+      "review_status": "approved",
+      "status_history": [
+        { "status": "draft", "at": "2026-03-20T00:00:00Z" },
+        { "status": "validated", "at": "2026-03-24T00:00:00Z" }
+      ]
+    }
+  ],
+  "validation_report_ref": "validation_report_batch_01.json"
+}
