@@ -1,0 +1,638 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Texas LAH/HMO Practice Engine Schemas",
+  "version": "0.3.1",
+  "definitions": {
+    "status": {
+      "type": "string",
+      "enum": [
+        "draft",
+        "in_review",
+        "validated",
+        "archived"
+      ]
+    },
+    "rule_card": {
+      "type": "object",
+      "required": [
+        "id",
+        "topic_code",
+        "title",
+        "summary",
+        "points",
+        "status"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 3
+        },
+        "topic_code": {
+          "type": "string",
+          "minLength": 3
+        },
+        "title": {
+          "type": "string",
+          "minLength": 3
+        },
+        "summary": {
+          "type": "string",
+          "minLength": 1
+        },
+        "points": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "minItems": 1
+        },
+        "tags": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "source_notes": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "status": {
+          "$ref": "#/definitions/status"
+        }
+      },
+      "additionalProperties": false
+    },
+    "question_choice": {
+      "type": "object",
+      "required": [
+        "key",
+        "text"
+      ],
+      "properties": {
+        "key": {
+          "type": "string",
+          "enum": [
+            "A",
+            "B",
+            "C",
+            "D"
+          ]
+        },
+        "text": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "additionalProperties": false
+    },
+    "question_item": {
+      "type": "object",
+      "required": [
+        "question_id",
+        "rule_ids",
+        "domain",
+        "subdomain",
+        "difficulty",
+        "format",
+        "stem",
+        "options",
+        "correct_answer",
+        "correct_explanation",
+        "wrong_explanations",
+        "trap_type",
+        "source_confidence",
+        "review_status",
+        "status_history"
+      ],
+      "properties": {
+        "question_id": {
+          "type": "string",
+          "minLength": 3
+        },
+        "rule_ids": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "domain": {
+          "type": "string",
+          "minLength": 1
+        },
+        "subdomain": {
+          "type": "string",
+          "minLength": 1
+        },
+        "difficulty": {
+          "type": "string",
+          "enum": [
+            "easy",
+            "medium",
+            "hard"
+          ]
+        },
+        "format": {
+          "type": "string",
+          "minLength": 1
+        },
+        "stem": {
+          "type": "string",
+          "minLength": 1
+        },
+        "options": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/question_choice"
+          },
+          "minItems": 2
+        },
+        "correct_answer": {
+          "type": "string",
+          "enum": [
+            "A",
+            "B",
+            "C",
+            "D"
+          ]
+        },
+        "correct_explanation": {
+          "type": "string",
+          "minLength": 1
+        },
+        "wrong_explanations": {
+          "type": "object",
+          "propertyNames": {
+            "enum": [
+              "A",
+              "B",
+              "C",
+              "D"
+            ]
+          },
+          "additionalProperties": {
+            "type": "string",
+            "minLength": 1
+          },
+          "minProperties": 1
+        },
+        "trap_type": {
+          "type": "string",
+          "minLength": 1
+        },
+        "source_confidence": {
+          "type": "string",
+          "minLength": 1
+        },
+        "review_status": {
+          "type": "string",
+          "minLength": 1
+        },
+        "status_history": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "status",
+              "at"
+            ],
+            "properties": {
+              "status": {
+                "type": "string",
+                "minLength": 1
+              },
+              "at": {
+                "type": "string",
+                "format": "date-time"
+              }
+            },
+            "additionalProperties": false
+          }
+        }
+      },
+      "additionalProperties": false
+    },
+    "validated_question_batch": {
+      "type": "object",
+      "required": [
+        "batch_id",
+        "title",
+        "status",
+        "questions"
+      ],
+      "properties": {
+        "title": {
+          "type": "string",
+          "minLength": 3
+        },
+        "status": {
+          "type": "string",
+          "const": "validated"
+        },
+        "questions": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "$ref": "#/definitions/question_item"
+          }
+        },
+        "validation_report_ref": {
+          "type": "string",
+          "minLength": 3
+        },
+        "notes": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "batch_id": {
+          "type": "string",
+          "minLength": 3
+        }
+      },
+      "additionalProperties": false
+    },
+    "validation_flag": {
+      "type": "object",
+      "required": [
+        "id",
+        "artifact_type",
+        "artifact_id",
+        "severity",
+        "code",
+        "message",
+        "status"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 3
+        },
+        "artifact_type": {
+          "type": "string",
+          "enum": [
+            "rule_card",
+            "question_item",
+            "validated_question_batch",
+            "practice_set",
+            "mock_exam_form",
+            "ui_screen"
+          ]
+        },
+        "artifact_id": {
+          "type": "string",
+          "minLength": 3
+        },
+        "severity": {
+          "type": "string",
+          "enum": [
+            "info",
+            "warning",
+            "critical"
+          ]
+        },
+        "code": {
+          "type": "string",
+          "minLength": 3
+        },
+        "message": {
+          "type": "string",
+          "minLength": 3
+        },
+        "status": {
+          "type": "string",
+          "enum": [
+            "open",
+            "resolved",
+            "dismissed"
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
+    "validation_report": {
+      "type": "object",
+      "required": [
+        "id",
+        "batch_id",
+        "status",
+        "summary",
+        "flags",
+        "generated_at"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 3
+        },
+        "batch_id": {
+          "type": "string",
+          "minLength": 3
+        },
+        "status": {
+          "type": "string",
+          "enum": [
+            "complete",
+            "failed"
+          ]
+        },
+        "summary": {
+          "type": "object",
+          "required": [
+            "total_questions",
+            "schema_errors",
+            "critical_flags_open",
+            "warnings_open"
+          ],
+          "properties": {
+            "total_questions": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "schema_errors": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "critical_flags_open": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "warnings_open": {
+              "type": "integer",
+              "minimum": 0
+            }
+          },
+          "additionalProperties": false
+        },
+        "flags": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/validation_flag"
+          }
+        },
+        "generated_at": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "notes": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      },
+      "additionalProperties": false
+    },
+    "practice_set": {
+      "type": "object",
+      "required": [
+        "id",
+        "title",
+        "mode",
+        "question_ids",
+        "status"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 3
+        },
+        "title": {
+          "type": "string",
+          "minLength": 3
+        },
+        "mode": {
+          "type": "string",
+          "const": "batch_practice"
+        },
+        "question_ids": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 3
+          },
+          "minItems": 1
+        },
+        "time_limit_minutes": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "batch_ref": {
+          "type": "string",
+          "minLength": 3
+        },
+        "status": {
+          "$ref": "#/definitions/status"
+        }
+      },
+      "additionalProperties": false
+    },
+    "mock_exam_form": {
+      "type": "object",
+      "required": [
+        "id",
+        "title",
+        "mode",
+        "question_ids",
+        "time_limit_minutes",
+        "passing_score_percent",
+        "status"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 3
+        },
+        "title": {
+          "type": "string",
+          "minLength": 3
+        },
+        "mode": {
+          "type": "string",
+          "const": "exam_mode"
+        },
+        "question_ids": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 3
+          },
+          "minItems": 1
+        },
+        "time_limit_minutes": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "passing_score_percent": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 100
+        },
+        "status": {
+          "$ref": "#/definitions/status"
+        }
+      },
+      "additionalProperties": false
+    },
+    "ui_screen": {
+      "type": "object",
+      "required": [
+        "id",
+        "name",
+        "route",
+        "status"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 3
+        },
+        "name": {
+          "type": "string",
+          "minLength": 3
+        },
+        "route": {
+          "type": "string",
+          "minLength": 1
+        },
+        "description": {
+          "type": "string"
+        },
+        "status": {
+          "$ref": "#/definitions/status"
+        }
+      },
+      "additionalProperties": false
+    },
+    "session_result": {
+      "type": "object",
+      "required": [
+        "id",
+        "user_id",
+        "mode",
+        "started_at",
+        "question_results",
+        "score_percent",
+        "status"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 3
+        },
+        "user_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "mode": {
+          "type": "string",
+          "enum": [
+            "batch_practice",
+            "review_mode",
+            "exam_mode"
+          ]
+        },
+        "started_at": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "completed_at": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "question_results": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "question_id",
+              "selected_choice",
+              "is_correct"
+            ],
+            "properties": {
+              "question_id": {
+                "type": "string",
+                "minLength": 3
+              },
+              "selected_choice": {
+                "type": "string",
+                "enum": [
+                  "A",
+                  "B",
+                  "C",
+                  "D"
+                ]
+              },
+              "is_correct": {
+                "type": "boolean"
+              }
+            },
+            "additionalProperties": false
+          }
+        },
+        "score_percent": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 100
+        },
+        "status": {
+          "type": "string",
+          "enum": [
+            "in_progress",
+            "complete",
+            "abandoned"
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
+    "validated_batches_manifest": {
+      "type": "object",
+      "required": [
+        "id",
+        "version",
+        "batches"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "version": {
+          "type": "string",
+          "minLength": 1
+        },
+        "batches": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "batch_id",
+              "batch_path",
+              "report_path"
+            ],
+            "properties": {
+              "batch_id": {
+                "type": "string",
+                "minLength": 1
+              },
+              "batch_path": {
+                "type": "string",
+                "minLength": 1
+              },
+              "report_path": {
+                "type": "string",
+                "minLength": 1
+              }
+            },
+            "additionalProperties": false
+          }
+        }
+      },
+      "additionalProperties": false
+    }
+  }
+}

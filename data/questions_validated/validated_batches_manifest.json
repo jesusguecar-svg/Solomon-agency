@@ -1,0 +1,21 @@
+{
+  "id": "validated_batches_manifest",
+  "version": "1.0.0",
+  "batches": [
+    {
+      "batch_id": "question_bank_validated_batch_01",
+      "batch_path": "../data/questions_validated/question_bank_validated_batch_01.json",
+      "report_path": "../data/questions_validated/validation_report_batch_01.json"
+    },
+    {
+      "batch_id": "question_bank_validated_batch_02",
+      "batch_path": "../data/questions_validated/question_bank_validated_batch_02.json",
+      "report_path": "../data/questions_validated/validation_report_batch_02.json"
+    },
+    {
+      "batch_id": "question_bank_validated_batch_03",
+      "batch_path": "../data/questions_validated/question_bank_validated_batch_03.json",
+      "report_path": "../data/questions_validated/validation_report_batch_03.json"
+    }
+  ]
+}
