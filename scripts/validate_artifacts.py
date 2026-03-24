@@ -8,8 +8,8 @@ from pathlib import Path
 import sys
 
 ROOT = Path(__file__).resolve().parents[1]
-BATCH_PATH = ROOT / "data/questions_validated/validated_batch_001.json"
-REPORT_PATH = ROOT / "data/questions_validated/validation_report_001.json"
+BATCH_PATH = ROOT / "data/questions_validated/question_bank_validated_batch_01.json"
+REPORT_PATH = ROOT / "data/questions_validated/validation_report_batch_01.json"
 
 
 def load_json(path: Path) -> dict:
@@ -33,8 +33,8 @@ def validate_batch(batch: dict) -> list[str]:
         "prompt",
         "choices",
         "correct_choice",
-        "rationale",
-        "rationale_by_choice",
+        "correct_explanation",
+        "wrong_explanations",
         "status",
     ]
 
@@ -43,10 +43,9 @@ def validate_batch(batch: dict) -> list[str]:
             if field not in question:
                 errors.append(f"question[{idx}] missing field: {field}")
 
-        rationale_by_choice = question.get("rationale_by_choice", {})
-        for key in ["A", "B", "C", "D"]:
-            if key not in rationale_by_choice:
-                errors.append(f"question[{idx}] missing rationale_by_choice.{key}")
+        wrong_explanations = question.get("wrong_explanations", {})
+        if not isinstance(wrong_explanations, dict) or not wrong_explanations:
+            errors.append(f"question[{idx}] wrong_explanations must be a non-empty object")
 
     return errors
 

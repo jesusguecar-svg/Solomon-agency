@@ -5,5 +5,5 @@
   "question_ids": ["qv001", "qv002", "qv003"],
   "time_limit_minutes": 20,
   "status": "validated",
-  "batch_ref": "../questions_validated/validated_batch_001.json"
+  "batch_ref": "../questions_validated/question_bank_validated_batch_01.json"
 }

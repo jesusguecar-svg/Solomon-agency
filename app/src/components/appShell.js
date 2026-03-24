@@ -10,23 +10,23 @@ function renderChoices(question, disabled) {
     .join('');
 }
 
+function renderWrongExplanationList(question) {
+  const wrongMap = question.wrong_explanations ?? {};
+  return Object.entries(wrongMap)
+    .map(([key, text]) => `<li><strong>${key}</strong>: ${text}</li>`)
+    .join('');
+}
+
 function renderFeedback(question, answer) {
   if (!answer) return '';
-
-  const choiceRows = ['A', 'B', 'C', 'D']
-    .map((key) => {
-      const reason = question.rationale_by_choice?.[key] ?? 'No explanation provided.';
-      return `<li><strong>${key}</strong>: ${reason}</li>`;
-    })
-    .join('');
 
   return `
     <section class="feedback card">
       <h3>${answer.is_correct ? 'Correct' : 'Incorrect'}</h3>
       <p><strong>Correct answer:</strong> ${question.correct_choice}</p>
-      <p><strong>Why the correct answer is right:</strong> ${question.rationale_by_choice?.[question.correct_choice] ?? question.rationale}</p>
-      <p><strong>Choice-by-choice explanation:</strong></p>
-      <ul>${choiceRows}</ul>
+      <p><strong>Why the correct answer is right:</strong> ${question.correct_explanation}</p>
+      <p><strong>Why the wrong answers are wrong:</strong></p>
+      <ul>${renderWrongExplanationList(question)}</ul>
     </section>
   `;
 }

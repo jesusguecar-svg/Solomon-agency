@@ -22,8 +22,7 @@ export function createSessionEngine(batch) {
 
     answerCurrent(selectedChoice) {
       const question = this.getCurrentQuestion();
-      if (!question) return null;
-      if (this.hasAnsweredCurrent()) return null;
+      if (!question || this.hasAnsweredCurrent()) return null;
 
       const isCorrect = question.correct_choice === selectedChoice;
       const result = {
@@ -31,8 +30,8 @@ export function createSessionEngine(batch) {
         selected_choice: selectedChoice,
         correct_choice: question.correct_choice,
         is_correct: isCorrect,
-        rationale: question.rationale,
-        rationale_by_choice: question.rationale_by_choice
+        correct_explanation: question.correct_explanation,
+        wrong_explanations: question.wrong_explanations
       };
 
       this.answers.push(result);

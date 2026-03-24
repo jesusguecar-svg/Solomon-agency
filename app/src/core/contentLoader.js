@@ -1,4 +1,4 @@
-const DEFAULT_BATCH_PATH = '../data/questions_validated/validated_batch_001.json';
+const DEFAULT_BATCH_PATH = '../data/questions_validated/question_bank_validated_batch_01.json';
 
 async function loadJson(path) {
   const response = await fetch(path);

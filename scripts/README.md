@@ -1,6 +1,8 @@
 # Scripts
 
-- `validate_artifacts.py`: minimal bootstrap validator for validated batch/report shape checks.
+- `validate_artifacts.py`: validates required shape for:
+  - `data/questions_validated/question_bank_validated_batch_01.json`
+  - `data/questions_validated/validation_report_batch_01.json`
 
 Run:
 ```bash

@@ -2,26 +2,13 @@
   "project": {
     "name": "Texas General Lines Life Accident Health and HMO Practice Engine",
     "short_code": "TX_LAH_HMO_ENGINE",
-    "version": "0.2.0",
+    "version": "0.2.1",
     "status": "bootstrap"
   },
-  "app_modes": [
-    "batch_practice",
-    "review_mode",
-    "exam_mode"
-  ],
+  "app_modes": ["batch_practice", "review_mode", "exam_mode"],
   "required_statuses": {
-    "artifact_status": [
-      "draft",
-      "in_review",
-      "validated",
-      "archived"
-    ],
-    "flag_status": [
-      "open",
-      "resolved",
-      "dismissed"
-    ]
+    "artifact_status": ["draft", "in_review", "validated", "archived"],
+    "flag_status": ["open", "resolved", "dismissed"]
   },
   "artifacts": [
     "rule_card",
@@ -39,7 +26,7 @@
     "require_unique_ids": true,
     "require_valid_status_values": true,
     "require_question_choice_integrity": true,
-    "require_per_choice_rationale_for_validated_questions": true,
+    "require_question_explanations": true,
     "block_promotion_on_open_critical_flags": true
   },
   "workflow_rules": {
