@@ -1,0 +1,40 @@
+{
+  "project": {
+    "name": "Texas General Lines Life Accident Health and HMO Practice Engine",
+    "short_code": "TX_LAH_HMO_ENGINE",
+    "version": "0.2.1",
+    "status": "bootstrap"
+  },
+  "app_modes": ["batch_practice", "review_mode", "exam_mode"],
+  "required_statuses": {
+    "artifact_status": ["draft", "in_review", "validated", "archived"],
+    "flag_status": ["open", "resolved", "dismissed"]
+  },
+  "artifacts": [
+    "rule_card",
+    "question_item",
+    "validated_question_batch",
+    "validation_flag",
+    "validation_report",
+    "practice_set",
+    "mock_exam_form",
+    "ui_screen",
+    "session_result"
+  ],
+  "validation_rules": {
+    "schema_source": "data/master/schemas.json",
+    "require_unique_ids": true,
+    "require_valid_status_values": true,
+    "require_question_choice_integrity": true,
+    "require_question_explanations": true,
+    "block_promotion_on_open_critical_flags": true
+  },
+  "workflow_rules": {
+    "source_of_truth_data_path": "data/",
+    "draft_question_path": "data/questions_raw/",
+    "validated_question_path": "data/questions_validated/",
+    "exam_form_path": "data/exam_forms/",
+    "promote_only_after_validation": true,
+    "app_consumes_only_validated_artifacts": true
+  }
+}

@@ -1,0 +1,13 @@
+{
+  "id": "validation_report_batch_01",
+  "batch_id": "question_bank_validated_batch_01",
+  "status": "complete",
+  "summary": {
+    "total_questions": 3,
+    "schema_errors": 0,
+    "critical_flags_open": 0,
+    "warnings_open": 0
+  },
+  "flags": [],
+  "generated_at": "2026-03-24T00:00:00Z"
+}
